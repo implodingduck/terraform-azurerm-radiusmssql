@@ -2,7 +2,7 @@ output "result" {
   value = {
     values = {
       server   = azurerm_mssql_server.db.fully_qualified_domain_name
-      port     = "1433"
+      port     = 1433
       username = azurerm_mssql_server.db.administrator_login
       database = azurerm_mssql_database.db.name
     }
