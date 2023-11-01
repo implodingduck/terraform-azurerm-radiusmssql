@@ -13,13 +13,19 @@ resource "azurerm_resource_group" "rg" {
   tags     = local.merged_tags
 }
 
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&=+-_?"
+}
+
 resource "azurerm_mssql_server" "db" {
   name                         = "${local.name}-server"
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"
   administrator_login          = "sqladmin"
-  administrator_login_password = "P@${substr(sha512(var.context.resource.id), 16, 32)}rd!"
+  administrator_login_password = random_password.password.result
   minimum_tls_version          = "1.2"
 
   tags = local.merged_tags
