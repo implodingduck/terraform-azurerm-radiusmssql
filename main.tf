@@ -19,7 +19,7 @@ resource "azurerm_mssql_server" "db" {
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"
   administrator_login          = "sqladmin"
-  administrator_login_password = "P${substr(sha512(var.context.resource.id), 0, 16)}!"
+  administrator_login_password = "P@${substr(sha512(var.context.resource.id), 16, 32)}rd!"
   minimum_tls_version          = "1.2"
 
   tags = local.merged_tags
